@@ -27,26 +27,26 @@ const taskSchema = mongoose.Schema({
 
 const Task = mongoose.model("Task", taskSchema);
 
-app.get("/tasks", async (req, res) => {
+app.get("/api/tasks", async (req, res) => {
   const tasks = await Task.find();
   res.json(tasks);
 });
 
-app.post("/tasks", async (req, res) => {
+app.post("/api/tasks", async (req, res) => {
   const { task } = req.body;
   const newTask = new Task({ task });
   await newTask.save();
   res.json(newTask);
 });
 
-app.put("/tasks/:id", async (req, res) => {
+app.put("/api/tasks/:id", async (req, res) => {
   const updated = await Task.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
   res.json(updated);
 });
 
-app.delete("/tasks/:id", async (req, res) => {
+app.delete("/api/tasks/:id", async (req, res) => {
   await Task.findByIdAndDelete(req.params.id);
   res.json({ message: "task deleted" });
 });
