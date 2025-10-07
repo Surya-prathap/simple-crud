@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 function App() {
   const [task, setTask] = useState("");
   const [taskList, setTaskList] = useState([]);
@@ -11,7 +13,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/tasks`)
+      .get(`${API_URL}/tasks`)
       .then((res) => {
         setTaskList(res.data);
       })
@@ -21,7 +23,7 @@ function App() {
   const addTask = async () => {
     if (!task.trim()) return;
     try {
-      const res = await axios.post(`http://localhost:8000/tasks`, { task });
+      const res = await axios.post(`${API_URL}/tasks`, { task });
       setTaskList([...taskList, res.data]);
       setTask("");
     } catch (err) {
@@ -30,14 +32,14 @@ function App() {
   };
 
   const toggleTask = async (id, completed) => {
-    const res = await axios.put(`http://localhost:8000/tasks/${id}`, {
+    const res = await axios.put(`${API_URL}/tasks/${id}`, {
       completed: !completed,
     });
     setTaskList(taskList.map((t) => (t._id === id ? res.data : t)));
   };
 
   const editTask = async (id) => {
-    const res = await axios.put(`http://localhost:8000/tasks/${id}`, {
+    const res = await axios.put(`${API_URL}/tasks/${id}`, {
       task: edittask,
     });
     setTaskList(taskList.map((t) => (t._id === id ? res.data : t)));
@@ -46,7 +48,7 @@ function App() {
   };
 
   const deleteTask = async (id) => {
-    const res = await axios.delete(`http://localhost:8000/tasks/${id}`);
+    const res = await axios.delete(`${API_URL}/tasks/${id}`);
     setTaskList(taskList.filter((t) => t._id !== id));
   };
 
