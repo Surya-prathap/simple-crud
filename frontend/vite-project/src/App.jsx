@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/tasks`)
+      .get(`${API_URL}/api/tasks`)
       .then((res) => {
         setTaskList(res.data);
       })
@@ -23,7 +23,7 @@ function App() {
   const addTask = async () => {
     if (!task.trim()) return;
     try {
-      const res = await axios.post(`${API_URL}/tasks`, { task });
+      const res = await axios.post(`${API_URL}/api/tasks`, { task });
       setTaskList([...taskList, res.data]);
       setTask("");
     } catch (err) {
@@ -32,14 +32,14 @@ function App() {
   };
 
   const toggleTask = async (id, completed) => {
-    const res = await axios.put(`${API_URL}/tasks/${id}`, {
+    const res = await axios.put(`${API_URL}/api/tasks/${id}`, {
       completed: !completed,
     });
     setTaskList(taskList.map((t) => (t._id === id ? res.data : t)));
   };
 
   const editTask = async (id) => {
-    const res = await axios.put(`${API_URL}/tasks/${id}`, {
+    const res = await axios.put(`${API_URL}/api/tasks/${id}`, {
       task: edittask,
     });
     setTaskList(taskList.map((t) => (t._id === id ? res.data : t)));
@@ -48,7 +48,7 @@ function App() {
   };
 
   const deleteTask = async (id) => {
-    const res = await axios.delete(`${API_URL}/tasks/${id}`);
+    const res = await axios.delete(`${API_URL}/api/tasks/${id}`);
     setTaskList(taskList.filter((t) => t._id !== id));
   };
 
