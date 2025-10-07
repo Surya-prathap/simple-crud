@@ -4,10 +4,14 @@ const cors = require("cors");
 const dotEnv = require("dotenv").config();
 
 const PORT = 8000;
+const corsOptions = {
+  origin: "https://simple-crud-8vtd.vercel.app/",
+  optionSuccessStatus: 200,
+};
 
 const app = express();
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 mongoose
