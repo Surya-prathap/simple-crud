@@ -4,14 +4,14 @@ const cors = require("cors");
 const dotEnv = require("dotenv").config();
 
 const PORT = 8000;
-const corsOptions = {
-  origin: "https://simple-crud-8vtd.vercel.app/",
-  optionSuccessStatus: 200,
-};
+// const corsOptions = {
+//   origin: "https://simple-crud-8vtd.vercel.app/",
+//   optionSuccessStatus: 200,
+// };
 
 const app = express();
 
-app.use(cors(corsOptions));
+app.use(cors(/*corsOptions */));
 app.use(express.json());
 
 mongoose
@@ -28,8 +28,12 @@ const taskSchema = mongoose.Schema({
 const Task = mongoose.model("Task", taskSchema);
 
 app.get("/api/tasks", async (req, res) => {
-  const tasks = await Task.find();
-  res.json(tasks);
+  try {
+    const tasks = await Task.find();
+    res.json(tasks);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 app.post("/api/tasks", async (req, res) => {

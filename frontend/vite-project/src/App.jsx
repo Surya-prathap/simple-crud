@@ -15,7 +15,10 @@ function App() {
     axios
       .get(`${API_URL}/api/tasks`)
       .then((res) => {
-        setTaskList(res.data);
+        if (Array.isArray(res.data)) {
+          setTaskList(res.data);
+        }
+        // console.log("api res:", res.data);
       })
       .catch((err) => console.log(err));
   }, []);
