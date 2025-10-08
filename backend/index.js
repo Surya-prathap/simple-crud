@@ -5,7 +5,7 @@ const dotEnv = require("dotenv").config();
 
 const PORT = 8000;
 const corsOptions = {
-  origin: "https://simple-crud-peach.vercel.app/",
+  origin: "https://simple-crud-flax-kappa.vercel.app/",
   optionSuccessStatus: 200,
 };
 
